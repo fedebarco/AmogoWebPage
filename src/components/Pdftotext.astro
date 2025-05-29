@@ -1,31 +1,35 @@
 ---
 import pdfLogo from '../assets/logo.svg';
+import { getTranslation } from '../i18n/translations';
+import { getCurrentLanguage } from '../utils/i18n';
+
+const lang = getCurrentLanguage(Astro.url.pathname);
 ---
 <div id="container">
     <nav>
         <div class="logo">
-            <img src={pdfLogo.src} alt="PDFtoText Logo" class="nav-logo">
-            <span>PDFtoText</span>
+            <img src={pdfLogo.src} alt={getTranslation(lang, 'logoAlt')} class="nav-logo">
+            <span>{getTranslation(lang, 'appName')}</span>
         </div>
     </nav>
 
     <main>
         <h1>
-            <img src={pdfLogo.src} alt="PDFtoText Logo" class="main-logo">
-            PDFtoText
+            <img src={pdfLogo.src} alt={getTranslation(lang, 'logoAlt')} class="main-logo">
+            {getTranslation(lang, 'appName')}
         </h1>
-        <p>Convert PDF to TXT is a simple and fast macOS app that transforms your PDF files into editable text. Perfect for easily extracting content and working with it in any text editor.</p>
+        <p>{getTranslation(lang, 'mainDescription')}</p>
         <video autoplay muted loop width="640" height="360">
             <source src="/pdftext.mp4" type="video/mp4">
-            Your browser does not support the video tag.
+            {getTranslation(lang, 'browserNotSupported')}
         </video>
-        <a href="#" class="download-button">Download</a>
+        <a href="#" class="download-button">{getTranslation(lang, 'downloadButton')}</a>
     </main>
 
     <footer>
-        <a href="https://github.com/fedebarco/PDFtoText/blob/main/LICENSE">License</a>
-        <a href="https://github.com/fedebarco/PDFtoText/tree/main">Source Code</a>
-        <a href="/privacy">Privacy Policy</a>
+        <a href="https://github.com/fedebarco/PDFtoText/blob/main/LICENSE">{getTranslation(lang, 'license')}</a>
+        <a href="https://github.com/fedebarco/PDFtoText/tree/main">{getTranslation(lang, 'sourceCode')}</a>
+        <a href={`${lang === 'en' ? '/en' : ''}/privacy`}>{getTranslation(lang, 'privacyPolicy')}</a>
     </footer>
 </div>
 

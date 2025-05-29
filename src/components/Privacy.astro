@@ -1,59 +1,54 @@
 ---
 import pdfLogo from '../assets/logo.svg';
+import { getTranslation, getTranslationList } from '../i18n/translations';
+import { getCurrentLanguage } from '../utils/i18n';
+
+const lang = getCurrentLanguage(Astro.url.pathname);
 ---
 <div id="container">
     <nav>
         <div class="logo">
-            <img src={pdfLogo.src} alt="PDFtoText Logo" class="nav-logo">
-            <span>PDFtoText</span>
+            <img src={pdfLogo.src} alt={getTranslation(lang, 'logoAlt')} class="nav-logo">
+            <span>{getTranslation(lang, 'appName')}</span>
         </div>
     </nav>
 
     <main class="privacy-content">
-        <h1>Privacy Policy</h1>
+        <h1>{getTranslation(lang, 'privacyTitle')}</h1>
         
         <section>
-            <h2>No Data Collection</h2>
-            <p>
-                PDFtoText is designed with your privacy in mind. We want to be clear about our stance on data collection:
-                we don't collect any personal information or data from our users.
-            </p>
+            <h2>{getTranslation(lang, 'noDataCollectionTitle')}</h2>
+            <p>{getTranslation(lang, 'noDataCollectionText')}</p>
         </section>
 
         <section>
-            <h2>How PDFtoText Works</h2>
-            <p>
-                PDFtoText operates entirely on your local machine. When you convert a PDF file:
-            </p>
+            <h2>{getTranslation(lang, 'howItWorksTitle')}</h2>
+            <p>{getTranslation(lang, 'howItWorksIntro')}</p>
             <ul>
-                <li>All processing happens locally on your computer</li>
-                <li>No files are uploaded to any servers</li>
-                <li>No usage data is collected or transmitted</li>
-                <li>No analytics or tracking tools are implemented</li>
+                {getTranslationList(lang, 'howItWorksList').map(item => (
+                    <li>{item}</li>
+                ))}
             </ul>
         </section>
 
         <section>
-            <h2>File Access</h2>
-            <p>
-                The app only accesses the PDF files you explicitly choose to convert. These files remain on your computer
-                and are never transmitted elsewhere.
-            </p>
+            <h2>{getTranslation(lang, 'fileAccessTitle')}</h2>
+            <p>{getTranslation(lang, 'fileAccessText')}</p>
         </section>
 
         <section>
-            <h2>Contact</h2>
+            <h2>{getTranslation(lang, 'contactTitle')}</h2>
             <p>
-                If you have any questions about our privacy practices, feel free to reach out at 
+                {getTranslation(lang, 'contactText')} 
                 <a href="mailto:fbarcoo@unal.edu.co" class="inline-link">fbarcoo@unal.edu.co</a>.
             </p>
         </section>
     </main>
 
     <footer>
-        <a href="https://github.com/fedebarco/PDFtoText/blob/main/LICENSE">License</a>
-        <a href="https://github.com/fedebarco/PDFtoText/tree/main">Source Code</a>
-        <a href="/">Home</a>
+        <a href="https://github.com/fedebarco/PDFtoText/blob/main/LICENSE">{getTranslation(lang, 'license')}</a>
+        <a href="https://github.com/fedebarco/PDFtoText/tree/main">{getTranslation(lang, 'sourceCode')}</a>
+        <a href={`${lang === 'en' ? '/en' : ''}/`}>{getTranslation(lang, 'home')}</a>
     </footer>
 </div>
 

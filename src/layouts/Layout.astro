@@ -1,5 +1,11 @@
+---
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+
+const currentLocale = Astro.url.pathname.startsWith('/es') ? 'en' : 'es';
+---
+
 <!doctype html>
-<html lang="en">
+<html lang={currentLocale}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -7,6 +13,7 @@
 		<title>PdftoText</title>
 	</head>
 	<body>
+		<LanguageSwitcher />
 		<slot />
 	</body>
 </html>
