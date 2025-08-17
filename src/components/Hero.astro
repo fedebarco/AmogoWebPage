@@ -1,0 +1,218 @@
+---
+import { getTranslation } from '../i18n/translations';
+import { getCurrentLanguage } from '../utils/i18n';
+
+const lang = getCurrentLanguage(Astro.url.pathname);
+const logo2Path = '/images/logo2.png';
+const actualPath = '/images/actual.jpeg';
+---
+
+<div id="container">
+    <nav>
+        <div class="logo">
+            <img src={logo2Path} alt="Aflujo Logo" class="nav-logo">
+            <span>Aflujo</span>
+        </div>
+    </nav>
+
+    <main>
+        <h1>
+            <img src={logo2Path} alt="Aflujo Logo" class="main-logo">
+            Aflujo
+            <a href="https://apps.apple.com/co/app/aflujo/id6746057342?mt=12" class="download-button">Descargar</a>
+        </h1>
+        <p>Una aplicación para trabajar con tus pdfs...</p>
+        
+        <div class="video-container">
+            <img src={actualPath} alt="Actual Screenshot" class="demo-image">
+        </div>
+
+        <div class="info-section">
+            <h2>¿De dónde surgió la idea?</h2>
+            <div class="origin-story">
+                <h3>PDFToText</h3>
+                <p>
+                    La idea surgió de la necesidad de trabajar de manera más eficiente con archivos PDF, 
+                    comenzando como una simple herramienta de conversión de PDF a texto y evolucionando 
+                    hacia una solución más completa para el manejo de documentos.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <a href="https://github.com/fedebarco/PDFtoText/blob/main/LICENSE">Licencia</a>
+        <a href="https://github.com/fedebarco/PDFtoText/tree/main">Código Fuente</a>
+        <a href={`${lang === 'en' ? '/en' : ''}/privacy`}>Política de Privacidad</a>
+    </footer>
+</div>
+
+<style>
+:root {
+    --init-background-color: rgb(28, 28, 30);
+    --init-label-color: rgba(255, 255, 255, 0.98);
+    --secondary-color: rgba(255, 255, 255, 0.6);
+}
+
+body {
+    background-color: var(--init-background-color);
+    color: var(--init-label-color);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    letter-spacing: -0.022em;
+}
+
+nav {
+    background-color: rgba(28, 28, 30, 0.8);
+    padding: 16px 40px;
+    width: 100%;
+    text-align: left;
+    box-sizing: border-box;
+    backdrop-filter: blur(20px);
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--init-label-color);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo span {
+    color: white;
+}
+
+.nav-logo {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+main {
+    text-align: center;
+    padding: 120px 20px 40px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+main h1 {
+    font-size: 56px;
+    margin: 0 0 20px;
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.main-logo {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+}
+
+main p {
+    font-size: 21px;
+    margin-bottom: 40px;
+    color: var(--init-label-color);
+    line-height: 1.47059;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.video-container {
+    margin-bottom: 40px;
+    width: 100%;
+    max-width: 640px;
+}
+
+.demo-image {
+    width: 100%;
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.info-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 18px;
+    margin-bottom: 40px;
+    max-width: 640px;
+    width: 100%;
+}
+
+.info-section h2 {
+    font-size: 32px;
+    margin: 0 0 20px;
+    color: var(--init-label-color);
+}
+
+.origin-story h3 {
+    font-size: 24px;
+    margin: 0 0 16px;
+    color: var(--init-label-color);
+}
+
+.origin-story p {
+    font-size: 18px;
+    margin: 0;
+    color: var(--secondary-color);
+}
+
+.download-button {
+    background-color: var(--init-label-color);
+    color: var(--init-background-color);
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 980px;
+    font-size: 17px;
+    font-weight: 400;
+    display: inline-block;
+    transition: all 0.2s ease;
+    letter-spacing: 0.05em;
+
+}
+
+.download-button:hover {
+    transform: scale(1.02);
+    background-color: #fff;
+}
+
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+footer a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 12px;
+    transition: color 0.2s ease;
+}
+
+footer a:hover {
+    color: var(--init-label-color);
+}
+</style> 
