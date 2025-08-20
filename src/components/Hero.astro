@@ -4,7 +4,7 @@ import { getCurrentLanguage } from '../utils/i18n';
 
 const lang = getCurrentLanguage(Astro.url.pathname);
 const logo2Path = '/images/logo2.png';
-const actualPath = '/images/actual.jpeg';
+const actualPath = '/actual.mp4';
 ---
 
 <div id="container">
@@ -19,12 +19,33 @@ const actualPath = '/images/actual.jpeg';
         <h1>
             <img src={logo2Path} alt="Aflujo Logo" class="main-logo">
             Aflujo
-            <a href="https://apps.apple.com/co/app/aflujo/id6746057342?mt=12" class="download-button">Descargar</a>
+            <a href="https://apps.apple.com/co/app/aflujo/id6746057342?mt=12" class="download-button">
+                <img src="/appstore.png" alt="Descargar en App Store" class="appstore-button">
+            </a>
         </h1>
-        <p>Una aplicación para trabajar con tus pdfs...</p>
+        <p>Una aplicación para trabajar con tus pdfs. Convierte tus PDFs en texto, imagenes, divide y combina.</p>
         
         <div class="video-container">
-            <img src={actualPath} alt="Actual Screenshot" class="demo-image">
+            <video src={actualPath} autoplay loop muted playsinline class="demo-image">
+                Tu navegador no soporta el elemento de video.
+            </video>
+        </div>
+
+        <div class="info-section future-section">
+            <h2>Próximos Pasos</h2>
+            <div class="future-content">
+                <div class="future-text">
+                    <p>
+                        Aflujo está evolucionando para convertirse en una poderosa aplicación de flujos de trabajo con documentos,
+                        incorporando agentes de inteligencia artificial para automatizar y optimizar tus procesos documentales.
+                        Pronto podrás crear flujos personalizados que combinen el poder del procesamiento de PDFs con la
+                        inteligencia artificial.
+                    </p>
+                </div>
+                <div class="future-image">
+                    <img src="/futuro.png" alt="Futuro de Aflujo" class="future-preview">
+                </div>
+            </div>
         </div>
 
         <div class="info-section">
@@ -179,22 +200,20 @@ main p {
 }
 
 .download-button {
-    background-color: var(--init-label-color);
-    color: var(--init-background-color);
-    padding: 12px 24px;
     text-decoration: none;
-    border-radius: 980px;
-    font-size: 17px;
-    font-weight: 400;
     display: inline-block;
     transition: all 0.2s ease;
-    letter-spacing: 0.05em;
+}
 
+.appstore-button {
+    height: 40px;
+    width: auto;
+    display: block;
 }
 
 .download-button:hover {
-    transform: scale(1.02);
-    background-color: #fff;
+    transform: scale(1.05);
+    opacity: 0.95;
 }
 
 footer {
@@ -214,5 +233,57 @@ footer a {
 
 footer a:hover {
     color: var(--init-label-color);
+}
+
+.future-section {
+    margin-bottom: 40px;
+}
+
+.future-content {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.future-text {
+    flex: 1;
+    text-align: left;
+}
+
+.future-text p {
+    font-size: 18px;
+    margin: 0;
+    color: var(--secondary-color);
+    text-align: left;
+}
+
+.future-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.future-preview {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.future-preview:hover {
+    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    .future-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .future-text, .future-image {
+        flex: none;
+        width: 100%;
+    }
 }
 </style> 
