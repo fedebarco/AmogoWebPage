@@ -1,0 +1,151 @@
+---
+import { getI18N } from '../i18n/translations';
+import { getCurrentLanguage } from '../utils/i18n';
+
+const lang = getCurrentLanguage(Astro.url.pathname);
+const i18n = getI18N({ lang });
+
+// Pasar las traducciones como data attributes
+const translations = {
+  uploading: i18n.UPLOAD.UPLOADING,
+  processing: i18n.UPLOAD.PROCESSING,
+  error: i18n.UPLOAD.ERROR,
+  success: i18n.UPLOAD.SUCCESS
+};
+---
+
+<div 
+  class="max-w-2xl mx-auto"
+  data-uploading={translations.uploading}
+  data-processing={translations.processing}
+  data-error={translations.error}
+  data-success={translations.success}
+>
+  <div
+    id="dropZone"
+    class="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center hover:border-blue-500 transition-colors cursor-pointer"
+  >
+    <input
+      type="file"
+      id="fileInput"
+      class="hidden"
+      accept=".pdf,image/*"
+      multiple
+    />
+    <p class="text-lg mb-2">{i18n.UPLOAD.DROP_ZONE}</p>
+    <p class="text-sm text-gray-500">{i18n.UPLOAD.SUPPORTED_FILES}</p>
+  </div>
+
+  <div id="uploadStatus" class="mt-8 hidden">
+    <div class="flex items-center justify-center">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+      <p class="ml-3 text-lg" id="statusText"></p>
+    </div>
+  </div>
+
+  <div id="response" class="mt-8 hidden">
+    <pre class="bg-gray-100 p-4 rounded-lg overflow-auto max-h-96"></pre>
+  </div>
+</div>
+
+<script is:inline>
+  const container = document.querySelector('[data-uploading]');
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  const uploadStatus = document.getElementById('uploadStatus');
+  const statusText = document.getElementById('statusText');
+  const response = document.getElementById('response');
+  
+  const i18n = {
+    UPLOADING: container.dataset.uploading,
+    PROCESSING: container.dataset.processing,
+    ERROR: container.dataset.error,
+    SUCCESS: container.dataset.success
+  };
+
+  // Prevent default drag behaviors
+  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, preventDefaults, false);
+    document.body.addEventListener(eventName, preventDefaults, false);
+  });
+
+  // Highlight drop zone when dragging over it
+  ['dragenter', 'dragover'].forEach(eventName => {
+    dropZone.addEventListener(eventName, highlight, false);
+  });
+
+  ['dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, unhighlight, false);
+  });
+
+  // Handle dropped files
+  dropZone.addEventListener('drop', handleDrop, false);
+  dropZone.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    if (target.files) {
+      handleFiles({ target: { files: target.files } });
+    }
+  });
+
+  function preventDefaults(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  function highlight(e: Event) {
+    dropZone.classList.add('border-blue-500');
+  }
+
+  function unhighlight(e: Event) {
+    dropZone.classList.remove('border-blue-500');
+  }
+
+  function handleDrop(e: DragEvent) {
+    const dt = e.dataTransfer!;
+    const files = dt.files;
+    handleFiles({ target: { files } });
+  }
+
+  async function handleFiles(e: { target: { files: FileList } }) {
+    const files = [...e.target.files];
+    for (const file of files) {
+      await uploadFile(file);
+    }
+  }
+
+  async function uploadFile(file: File) {
+    // Show upload status
+    uploadStatus.classList.remove('hidden');
+    statusText.textContent = i18n.UPLOADING;
+    response.classList.add('hidden');
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      statusText.textContent = i18n.PROCESSING;
+      
+      const res = await fetch('https://juanka1111.app.n8n.cloud/webhook/imagen', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      
+      const data = await res.json();
+      
+      // Show success
+      statusText.textContent = i18n.SUCCESS;
+      response.classList.remove('hidden');
+      const preElement = response.querySelector('pre');
+      if (preElement) {
+        preElement.textContent = JSON.stringify(data, null, 2);
+      }
+      
+    } catch (error) {
+      console.error('Error:', error);
+      statusText.textContent = i18n.ERROR;
+    }
+  }
+</script>

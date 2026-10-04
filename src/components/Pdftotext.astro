@@ -27,6 +27,7 @@ const lang = getCurrentLanguage(Astro.url.pathname);
     </main>
 
     <footer>
+        <a href={`${lang === 'en' ? '/en' : ''}/`}>{getTranslation(lang, 'home')}</a>
         <a href="https://github.com/fedebarco/PDFtoText/blob/main/LICENSE">{getTranslation(lang, 'license')}</a>
         <a href="https://github.com/fedebarco/PDFtoText/tree/main">{getTranslation(lang, 'sourceCode')}</a>
         <a href={`${lang === 'en' ? '/en' : ''}/privacy`}>{getTranslation(lang, 'privacyPolicy')}</a>
@@ -169,5 +170,12 @@ footer a {
 
 footer a:hover {
     color: var(--init-label-color);
+}
+
+@media (max-width: 767px) {
+    main h1 {
+        font-size: 36px;
+        flex-wrap: wrap;
+    }
 }
 </style>

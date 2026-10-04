@@ -1,5 +1,15 @@
 export const translations = {
   es: {
+    // Upload page
+    UPLOAD: {
+      TITLE: 'Subir Archivos',
+      DROP_ZONE: 'Arrastra y suelta archivos aquí o haz clic para seleccionar',
+      SUPPORTED_FILES: 'Archivos soportados: PDF e imágenes',
+      UPLOADING: 'Subiendo archivo...',
+      PROCESSING: 'Procesando archivo...',
+      ERROR: 'Error al procesar el archivo',
+      SUCCESS: 'Archivo procesado exitosamente'
+    },
     // Navigation
     appName: 'PDFtoText',
     logoAlt: 'Logo de PDFtoText',
@@ -36,6 +46,16 @@ export const translations = {
     contactText: 'Si tienes alguna pregunta sobre nuestras prácticas de privacidad, no dudes en contactarnos en'
   },
   en: {
+    // Upload page
+    UPLOAD: {
+      TITLE: 'Upload Files',
+      DROP_ZONE: 'Drag and drop files here or click to select',
+      SUPPORTED_FILES: 'Supported files: PDF and images',
+      UPLOADING: 'Uploading file...',
+      PROCESSING: 'Processing file...',
+      ERROR: 'Error processing file',
+      SUCCESS: 'File processed successfully'
+    },
     // Navigation
     appName: 'PDFtoText',
     logoAlt: 'PDFtoText Logo',
@@ -75,12 +95,17 @@ export const translations = {
 
 export type Language = keyof typeof translations;
 export type TranslationKey = keyof typeof translations.es;
+export type TranslationValue = string | readonly string[] | Record<string, string | string[]>;
 
-export function getTranslation(lang: Language, key: TranslationKey): string {
+export function getTranslation(lang: Language, key: TranslationKey): TranslationValue {
   return translations[lang][key];
 }
 
 export function getTranslationList(lang: Language, key: TranslationKey): string[] {
   const value = translations[lang][key];
   return Array.isArray(value) ? value : [];
-} 
+}
+
+export function getI18N({ lang }: { lang: Language }) {
+  return translations[lang];
+}

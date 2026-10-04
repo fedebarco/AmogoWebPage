@@ -1,0 +1,16 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import FileUpload from '../../components/FileUpload.astro';
+import { getI18N } from '../../i18n/translations';
+import { getCurrentLanguage } from '../../utils/i18n';
+
+const lang = getCurrentLanguage(Astro.url.pathname);
+const i18n = getI18N({ lang });
+---
+
+<Layout title={i18n.UPLOAD.TITLE}>
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-center mb-8">{i18n.UPLOAD.TITLE}</h1>
+    <FileUpload />
+  </main>
+</Layout>

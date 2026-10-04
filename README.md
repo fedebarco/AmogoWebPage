@@ -1,4 +1,44 @@
-# PDFtoText - Landing Page
+# Aflujo
+
+## Inicio y rutas
+
+El inicio (`/` y `/en`) muestra tres tarjetas: Taller de Alejo, Moldes y Software.
+Los dos primeros enlaces llevan a sus subdominios. Software abre `/pdf` o
+`/en/pdf`, donde se conserva la presentación anterior. Las rutas de privacidad
+y subida de archivos mantienen sus direcciones.
+
+## Requisitos y desarrollo
+
+Astro 7.3.5 requiere **Node.js >=22.12.0** y **npm >=9.6.5**. Usar una versión
+LTS de Node compatible también en el entorno de despliegue.
+
+```sh
+npm ci
+npm run dev
+npm run build
+npm run preview
+```
+
+`package-lock.json` fija las dependencias transitivas compatibles. No se deben
+actualizar las librerías internas de Astro mediante overrides independientes.
+
+## Imágenes del inicio
+
+El diseño actual utiliza `public/images/inicio-talleres.png`, el banner oscuro
+proporcionado como referencia. Cada tarjeta muestra su panel mediante un
+viewport SVG: en escritorio conserva la composición del banner y en móvil
+los tres paneles se apilan como enlaces independientes.
+
+Los recursos anteriores se conservan:
+
+`public/images/taller-de-alejo.jpeg` conserva la referencia proporcionada.
+`public/images/moldes.png` y `public/images/software.png` fueron creadas con
+la herramienta integrada ImageGen. Los prompts se guardan en
+`public/images/emblemas-prompts.md`.
+
+---
+
+# PDFtoText - Landing Page (documentación original)
 
 This is the main landing page for PDFtoText, a macOS application designed to transform PDF files into editable text. The website showcases the application's features and provides essential information for users.
 
